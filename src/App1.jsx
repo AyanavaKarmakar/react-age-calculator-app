@@ -1,19 +1,50 @@
 import React, { Component } from 'react';
-import { Form, FormControl, Button} from 'react-bootstrap';
+import { Form, FormControl, Button } from 'react-bootstrap';
 import './App1.css';
+import AgeStats from './AgeStats';
 
-class App1 extends Component  {
-  render()  {
-    return(
-      <div className="App">
+class App1 extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      newDate: '',
+      birthday: '1992-06-21',
+      showStats: false
+    }
+  }
+
+  changeBirthday() {
+    console.log(this.state);
+    this.setState({ 
+      birthday: this.state.newDate,
+      showStats: true
+    });
+  }
+
+  render() {
+    return (
+      <div className="App1">
         <Form inline>
-          <h1>Enter Your Birthday Here</h1>
-          <FormControl type="date">
+          <h2>Input Your Birthday!</h2>
+          <FormControl 
+            type="date"
+            onChange={ event => this.setState({ newDate: event.target.value })}
+          >
           </FormControl>
           {' '}
-          <button>
+          <Button onClick={() => this.changeBirthday()}>
             Submit
-          </button>
+          </Button>
+          {
+            this.state.showStats ?
+              <div className="fade age-stats">
+                <AgeStats date={this.state.birthday} />
+              </div>
+            :
+              <div></div>
+          }
+          
         </Form>
       </div>
     )
